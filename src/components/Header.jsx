@@ -1,18 +1,15 @@
-import React, { useMemo } from "react";
+import React from "react";
 import { Fragment } from "react";
 
 const Header = ({
   products,
+  isEmpty,
+  productsTotal,
   deleteProduct,
   incrementProduct,
   decrementProduct,
   emptyProducts,
 }) => {
-  const isEmpty = useMemo(() => products.length === 0, [products]);
-
-  const productsTotal = () =>
-    products.reduce((total, item) => total + item.price * item.quantity, 0);
-
   return (
     <Fragment>
       <header className="py-5 header">
