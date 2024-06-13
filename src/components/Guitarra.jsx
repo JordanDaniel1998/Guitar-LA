@@ -1,6 +1,6 @@
 import React, { Fragment } from "react";
 
-const Guitarra = ({ guitarra, setProducts }) => {
+const Guitarra = ({ guitarra, addToProducts }) => {
   const { id, name, image, description, price } = guitarra;
 
   return (
@@ -20,9 +20,7 @@ const Guitarra = ({ guitarra, setProducts }) => {
           <button
             type="button"
             className="btn btn-dark w-100"
-            onClick={() =>
-              setProducts((prevProducts) => [...prevProducts, guitarra])
-            }
+            onClick={() => addToProducts(guitarra)}
           >
             Agregar al Carrito
           </button>

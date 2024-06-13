@@ -4,12 +4,73 @@ import Guitarra from "./components/Guitarra.jsx";
 import { db } from "./data/db.js";
 
 function App() {
+  const initialProducts = () => {
+    const localStorageProducts = localStorage.getItem("products");
+    return localStorageProducts ? JSON.parse(localStorageProducts) : [];
+  };
   const [data, setData] = useState(db);
-  const [products, setProducts] = useState([]);
+  const [products, setProducts] = useState(initialProducts);
+  const MAX_ITEMS = 10;
+  const MIN_ITEMS = 1;
+
+  useEffect(() => {
+    localStorage.setItem("products", JSON.stringify(products));
+  }, [products]);
+
+  function addToProducts(item) {
+    const itemExists = products.findIndex((e) => e.id === item.id);
+    if (itemExists >= 0) {
+      const updateProducts = [...products];
+      updateProducts[itemExists].quantity++;
+      setProducts(updateProducts);
+    } else {
+      item.quantity = 1;
+      setProducts([...products, item]);
+    }
+  }
+
+  function deleteProduct(id) {
+    const newProducts = products.filter((item) => {
+      return item.id !== id;
+    });
+    setProducts(newProducts);
+  }
+
+  function incrementProduct(id) {
+    const updateProduct = products.map((item) => {
+      if (item.id === id && item.quantity < MAX_ITEMS) {
+        item.quantity++;
+      }
+      return item;
+    });
+
+    setProducts(updateProduct);
+  }
+
+  function decrementProduct(id) {
+    const updateProduct = products.map((item) => {
+      if (item.id === id && item.quantity > MIN_ITEMS) {
+        item.quantity--;
+      }
+      return item;
+    });
+
+    setProducts(updateProduct);
+  }
+
+  function emptyProducts() {
+    setProducts([]);
+  }
 
   return (
     <>
-      <Header />
+      <Header
+        products={products}
+        deleteProduct={deleteProduct}
+        incrementProduct={incrementProduct}
+        decrementProduct={decrementProduct}
+        emptyProducts={emptyProducts}
+      />
 
       <main className="container-xl mt-5">
         <h2 className="text-center">Nuestra Colección</h2>
@@ -20,7 +81,7 @@ function App() {
               <Guitarra
                 key={guitarra.id}
                 guitarra={guitarra}
-                setProducts={setProducts}
+                addToProducts={addToProducts}
               />
             );
           })}
