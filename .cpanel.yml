@@ -1,12 +1,14 @@
 deployment:
   tasks:
-    - export DEPLOY_PATH=/home/jdanield/repositories/Guitar-LA
-    - export TARGET_PATH=/home/jdanield/public_html/guitarla
-    - cd $DEPLOY_PATH
-    - git reset --hard
-    - git pull origin main
-    - npm install
-    - npm run build
-    - mkdir -p $TARGET_PATH
-    - cp -r $DEPLOY_PATH/dist/* $TARGET_PATH/
-    - echo "Despliegue completo en $(date)" >> $DEPLOY_PATH/deploy.log
+    - bash -c '
+        DEPLOY_PATH=/home/jdanield/repositories/Guitar-LA
+        TARGET_PATH=/home/jdanield/public_html/guitarla
+        mkdir -p "$TARGET_PATH"
+        cd "$DEPLOY_PATH"
+        git reset --hard
+        git pull origin main
+        npm install
+        npm run build
+        cp -r "$DEPLOY_PATH/dist/"* "$TARGET_PATH/"
+        echo "Despliegue completo en $(date)" >> "$DEPLOY_PATH/deploy.log"
+      '
