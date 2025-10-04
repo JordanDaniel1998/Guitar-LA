@@ -1,0 +1,6 @@
+deployments:
+  tasks:
+    - export DEPLOYPATH=/home/jdanield/repositories/Guitar-LA
+    - /usr/bin/git -c $DEPLOY_PATH reset --hard
+    - /usr/bin/git $DEPLOY_PATH pull origin main
+    - echo "Despliegue completo en $(date)" >> $DEPLOY_PATH/deploy.log
