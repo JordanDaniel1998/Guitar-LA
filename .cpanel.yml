@@ -1,4 +1,4 @@
-deployments:
+deployment:
   tasks:
     - export DEPLOYPATH=/home/jdanield/repositories/Guitar-LA
     - /usr/bin/git -c $DEPLOY_PATH reset --hard
