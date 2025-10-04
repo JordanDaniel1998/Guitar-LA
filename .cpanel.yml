@@ -1,10 +1,3 @@
 deployment:
   tasks:
-    - bash -c '
-        cd /home/jdanield/repositories/Guitar-LA
-        git reset --hard
-        git pull origin main
-        mkdir -p /home/jdanield/public_html/guitarla
-        rsync -av --delete dist/ /home/jdanield/public_html/guitarla/
-        echo "Despliegue completo en $(date)" >> /home/jdanield/repositories/Guitar-LA/deploy.log
-      '
+    - /home/jdanield/deploy.sh
