@@ -12,3 +12,12 @@ Currently, two official plugins are available:
 You can visit the live demo of this project at the following link:
 
 - [Live Demo Guitar-La](https://website-guitar-la.netlify.app/)
+
+
+deployment: 
+  tasks: 
+    - export DEPLOYPATH=/home/jdanield/repositories/Guitar-LA 
+    - TARGET_PATH=/home/jdanield/public_html/guitarla 
+    - /usr/bin/git -c $DEPLOY_PATH reset --hard 
+    - /usr/bin/git $DEPLOY_PATH pull origin main 
+    - echo "Despliegue completo en $(date)" >> $DEPLOY_PATH/deploy.log
