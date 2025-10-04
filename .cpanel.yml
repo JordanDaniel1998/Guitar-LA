@@ -1,8 +1,10 @@
----
-deployment: 
-  tasks: 
-    - export DEPLOY_PATH=/home/jdanield/repositories/Guitar-LA 
-    - TARGET_PATH=/home/jdanield/public_html/guitarla 
-    - /usr/bin/git -c $DEPLOY_PATH reset --hard 
-    - /usr/bin/git $DEPLOY_PATH pull origin main 
-    - echo "Despliegue completo en $(date)" >> $DEPLOY_PATH/deploy.log
+deployment:
+  tasks:
+    - bash -c '
+        cd /home/jdanield/repositories/Guitar-LA
+        git reset --hard
+        git pull origin main
+        mkdir -p /home/jdanield/public_html/guitarla
+        rsync -av --delete dist/ /home/jdanield/public_html/guitarla/
+        echo "Despliegue completo en $(date)" >> /home/jdanield/repositories/Guitar-LA/deploy.log
+      '
